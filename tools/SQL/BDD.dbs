@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="PostgreSQL" id="Project-265e" database="PostgreSQL" >
+	<schema name="public" >
+		<comment><![CDATA[standard public schema]]></comment>
+		<table name="controleparcelles" row_count="0" >
+			<column name="idcontroleparcelle" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" >
+				<defo><![CDATA[nextval('controleparcelles_idcontroleparcelle_seq'::regclass)]]></defo>
+			</column>
+			<column name="idcontrole" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="idparcelle" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="nombretiges" type="real" length="8" decimal="8" jt="7" mandatory="y" >
+				<defo><![CDATA[0]]></defo>
+			</column>
+			<column name="nombreospartige" type="real" length="8" decimal="8" jt="7" mandatory="y" >
+				<defo><![CDATA[0]]></defo>
+			</column>
+			<column name="longueurospartige" type="real" length="8" decimal="8" jt="7" mandatory="y" />
+			<column name="couleur" type="real" length="8" decimal="8" jt="7" mandatory="y" />
+		</table>
+		<table name="controles" row_count="0" >
+			<column name="idcontrole" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" >
+				<defo><![CDATA[nextval('controles_idcontrole_seq'::regclass)]]></defo>
+			</column>
+			<column name="dateheure" type="timestamp" decimal="6" jt="93" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+		</table>
+		<table name="parcelles" row_count="0" >
+			<column name="idparcelle" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" >
+				<defo><![CDATA[nextval('parcelles_idparcelle_seq'::regclass)]]></defo>
+			</column>
+			<column name="description" type="text" decimal="0" jt="12" mandatory="y" />
+			<column name="idresponsable" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="longueur" type="real" length="8" decimal="8" jt="7" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+			</column>
+			<column name="largeur" type="real" length="8" decimal="8" jt="7" mandatory="y" >
+				<defo><![CDATA[1]]></defo>
+			</column>
+			<column name="limitecontrolelongueur" type="real" length="8" decimal="8" jt="7" >
+				<defo><![CDATA[15]]></defo>
+			</column>
+		</table>
+		<table name="recolteparcelles" row_count="0" >
+			<column name="idrecolteparcelle" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" >
+				<defo><![CDATA[nextval('recolteparcelles_idrecolteparcelle_seq'::regclass)]]></defo>
+			</column>
+			<column name="idrecolte" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="idparcelle" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="nombreostotal" type="real" length="8" decimal="8" jt="7" mandatory="y" />
+			<column name="poidstotal" type="real" length="8" decimal="8" jt="7" mandatory="y" />
+			<column name="longueurospartige" type="real" length="8" decimal="8" jt="7" mandatory="y" />
+		</table>
+		<table name="recoltes" row_count="0" >
+			<column name="idrecolte" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" >
+				<defo><![CDATA[nextval('recoltes_idrecolte_seq'::regclass)]]></defo>
+			</column>
+			<column name="dateheure" type="timestamp" decimal="6" jt="93" mandatory="y" >
+				<defo><![CDATA[CURRENT_TIMESTAMP]]></defo>
+			</column>
+		</table>
+		<table name="responsables" row_count="0" >
+			<column name="idresponsable" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" >
+				<defo><![CDATA[nextval('responsables_idresponsable_seq'::regclass)]]></defo>
+			</column>
+			<column name="nom" type="text" decimal="0" jt="12" mandatory="y" />
+		</table>
+		<view name="v_controleparcellesdateheure" >
+			<view_script><![CDATA[CREATE VIEW ${nameWithSchemaName} AS  SELECT cp.idcontroleparcelle,
+    cp.idcontrole,
+    cp.idparcelle,
+    cp.nombretiges,
+    cp.nombreospartige,
+    cp.longueurospartige,
+    cp.couleur,
+    c.dateheure
+   FROM (controleparcelles cp
+     JOIN controles c ON ((c.idcontrole = cp.idcontrole)))]]></view_script>
+			<column name="idcontroleparcelle" type="bigint" />
+			<column name="idcontrole" type="bigint" />
+			<column name="idparcelle" type="bigint" />
+			<column name="nombretiges" type="real" />
+			<column name="nombreospartige" type="real" />
+			<column name="longueurospartige" type="real" />
+			<column name="couleur" type="real" />
+			<column name="dateheure" type="timestamp" />
+		</view>
+		<sequence name="controleparcelles_idcontroleparcelle_seq" options="START WITH 1 INCREMENT BY 1" />
+		<sequence name="controles_idcontrole_seq" options="START WITH 1 INCREMENT BY 1" />
+		<sequence name="parcelles_idparcelle_seq" options="START WITH 1 INCREMENT BY 1" />
+		<sequence name="recolteparcelles_idrecolteparcelle_seq" options="START WITH 1 INCREMENT BY 1" />
+		<sequence name="recoltes_idrecolte_seq" options="START WITH 1 INCREMENT BY 1" />
+		<sequence name="responsables_idresponsable_seq" options="START WITH 1 INCREMENT BY 1" />
+	</schema>
+	<connector name="PostgreSQL" database="PostgreSQL" driver_class="org.postgresql.Driver" driver_jar="postgresql-42.5.3.jar" driver_desc="Standard" host="localhost" port="5432" instance="katsaka" user="postgres" passwd="cm9vdA==" useSystemProxy="false" />
+	<layout name="Main Layout" id="Layout-7d7" show_relation="columns" >
+		<entity schema="public" name="controleparcelles" color="BED3F4" x="320" y="80" />
+		<entity schema="public" name="controles" color="BED3F4" x="128" y="160" />
+		<entity schema="public" name="parcelles" color="BED3F4" x="560" y="80" />
+		<entity schema="public" name="recolteparcelles" color="BED3F4" x="560" y="336" />
+		<entity schema="public" name="recoltes" color="BED3F4" x="800" y="336" />
+		<entity schema="public" name="responsables" color="BED3F4" x="320" y="336" />
+		<entity schema="public" name="v_controleparcellesdateheure" color="BED3F4" x="48" y="336" />
+		<group name="controleparcelles" color="ECF0F7" >
+			<entity schema="public" name="controleparcelles" />
+			<entity schema="public" name="parcelles" />
+			<entity schema="public" name="responsables" />
+			<entity schema="public" name="v_controleparcellesdateheure" />
+			<entity schema="public" name="recoltes" />
+			<entity schema="public" name="controles" />
+			<entity schema="public" name="recolteparcelles" />
+		</group>
+		<script name="recolteparcelles" id="Editor-1960" language="SQL" >
+			<string><![CDATA[UPDATE "public".recolteparcelles SET ... = ... ;]]></string>
+		</script>
+	</layout>
+	<layout name="~Layout with Sample Tools" id="Layout-995" show_column_type="y" show_relation="columns" >
+		<entity schema="public" name="controleparcelles" color="BED3F4" x="320" y="48" />
+		<entity schema="public" name="controles" color="BED3F4" x="80" y="128" />
+		<entity schema="public" name="parcelles" color="BED3F4" x="576" y="48" />
+		<entity schema="public" name="recolteparcelles" color="BED3F4" x="576" y="304" />
+		<entity schema="public" name="recoltes" color="BED3F4" x="832" y="304" />
+		<entity schema="public" name="responsables" color="BED3F4" x="320" y="304" />
+		<entity schema="public" name="v_controleparcellesdateheure" color="BED3F4" x="48" y="304" />
+		<script name="SQL Editor" id="Editor-11a2" language="SQL" >
+			<string><![CDATA[SELECT
+	idcontroleparcelle, idcontrole, idparcelle, nombretiges, nombreospartige, longueurospartige, couleur
+FROM
+	"public".controleparcelles s;]]></string>
+		</script>
+		<browser id="Browse-138e" name="Relational Data Explorer" confirm_updates="y" >
+			<browse_table schema="public" entity="controleparcelles" x="20" y="20" width="400" height="300" />
+		</browser>
+		<query id="Query-134c" name="Query Builder" >
+			<query_table schema="public" name="controleparcelles" alias="c1" x="48" y="48" >
+				<column name="idcontroleparcelle" />
+				<column name="idcontrole" />
+				<column name="idparcelle" />
+				<column name="nombretiges" />
+				<column name="nombreospartige" />
+				<column name="longueurospartige" />
+				<column name="couleur" />
+			</query_table>
+		</query>
+		<form name="Report" id="Report-1db4" template="Page" css="container-fluid" view="frame" >
+			<var name="samplePageNumber" type="4" value="0" mandatory="n" />
+			<var name="sampleRecordsPerPage" type="4" value="100" mandatory="n" />
+			<body name="Body" template="Grid" pos="0,0,0,0,f,f" layout="{{-2,-2,-2,-2,-1},{-2,-2,-2,-2}}" scroll="n" html="n" >
+				<cell type="label" name="Controleparcelles Data" template="H3" pos="0,0,1,0,l,c" />
+				<cell type="chart" name="Pie" template="Pie" pos="0,1,4,1,l,c" max_records="20" >
+					<form_script type="DataSource" language="SQL" >
+						<var name="idcontroleparcelle" type="-5" />
+						<var name="idcontrole" type="-5" />
+						<var name="idparcelle" type="-5" />
+						<var name="nombretiges" type="7" />
+						<var name="nombreospartige" type="7" />
+						<var name="longueurospartige" type="7" />
+						<var name="couleur" type="7" />
+						<script ><![CDATA[SELECT * FROM "public".controleparcelles]]></script>
+					</form_script>
+					<param name="width" value="100%" />
+					<param name="v0" value="couleur" />
+					<param name="title" value="Sample Chart" />
+					<param name="height" value="400px" />
+				</cell>
+				<tableview name="sample" template="Table" css="table table-striped table-sm table-hover" pos="0,2,4,2,f,f" layout="{{-2,-2,-2,-2,-2,-2,-2},{-2,-2}}" scroll="n" html="n" header_rows="1" >
+					<form_script type="DataSource" language="SQL" >
+						<var name="idcontroleparcelle" type="-5" />
+						<var name="idcontrole" type="-5" />
+						<var name="idparcelle" type="-5" />
+						<var name="nombretiges" type="7" />
+						<var name="nombreospartige" type="7" />
+						<var name="longueurospartige" type="7" />
+						<var name="couleur" type="7" />
+						<script ><![CDATA[SELECT * FROM "public".controleparcelles]]></script>
+					</form_script>
+					<cell type="label" name="idcontroleparcelle" pos="0,0,0,0,c,c" />
+					<cell type="label" name="idcontrole" pos="1,0,1,0,c,c" />
+					<cell type="label" name="idparcelle" pos="2,0,2,0,c,c" />
+					<cell type="label" name="nombretiges" pos="3,0,3,0,c,c" />
+					<cell type="label" name="nombreospartige" pos="4,0,4,0,c,c" />
+					<cell type="label" name="longueurospartige" pos="5,0,5,0,c,c" />
+					<cell type="label" name="Button can open other pages." pos="6,0,6,0,c,c" />
+					<cell type="label" name="${idcontroleparcelle}" template="Plain" pos="0,1,0,1,l,c" />
+					<cell type="label" name="${idcontrole}" template="Plain" pos="1,1,1,1,l,c" />
+					<cell type="label" name="${idparcelle}" template="Plain" pos="2,1,2,1,l,c" />
+					<cell type="label" name="${nombretiges}" template="Plain" pos="3,1,3,1,l,c" />
+					<cell type="label" name="${nombreospartige}" template="Plain" pos="4,1,4,1,l,c" />
+					<cell type="label" name="${longueurospartige}" template="Plain" pos="5,1,5,1,l,c" />
+					<cell type="button" name="More" template="Plain" css="btn btn-sm btn-secondary" pos="6,1,6,1,c,c" ref_id="Report-1db4" />
+				</tableview>
+				<cell type="href" name="" disabled="${samplePageNumber&lt;1}" pos="0,3,0,3,l,c" glyph="bi-chevron_double_left" ref_id="Report-1db4" >
+					<var name="samplePageNumber" value="0" />
+				</cell>
+				<cell type="href" name="" disabled="${samplePageNumber&lt;1}" pos="1,3,1,3,l,c" glyph="bi-chevron_left" ref_id="Report-1db4" >
+					<var name="samplePageNumber" value="${Math.max(0,samplePageNumber-1)}" />
+				</cell>
+				<cell type="label" name="Page ${samplePageNumber+1}" pos="2,3,2,3,l,c" />
+				<cell type="href" name="" disabled="${!sampleHasNextPage}" pos="3,3,3,3,l,c" glyph="bi-chevron_right" ref_id="Report-1db4" >
+					<var name="samplePageNumber" value="${( samplePageNumber+1 )}" />
+				</cell>
+			</body>
+		</form>
+	</layout>
+</project>
