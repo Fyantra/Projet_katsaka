@@ -1,2 +1,2 @@
 # Projet_katsaka
- Projet pour predire le rendement d`un recolte de mais
+ Projet pour predire le rendement d`un recolte de maïs 
